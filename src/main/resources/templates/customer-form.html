@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Category Form</title>
+</head>
+	
+	<form th:action="@{/add-customer}" th:object="${customer}" method="POST">
+		<table>
+			<tr>
+				<td>Customer Name</td>
+				<td><input th:field="*{name}"></td>
+			</tr>
+			<tr>
+				<td>Address</td>
+				<td><input th:field="*{address.address}"></td>
+			</tr>
+			<tr>
+				<td>Area</td>
+				<td><input th:field="*{address.area}"></td>
+			</tr>
+			<tr>
+				<td>City</td>
+				<td><input th:field="*{address.city}"></td>
+			</tr>
+			<tr>
+				<td>State</td>
+				<td><input th:field="*{address.state}"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="submit"></td>
+			</tr>
+		</table>
+	</form>
+	
+<body>
+
+</body>
+</html>

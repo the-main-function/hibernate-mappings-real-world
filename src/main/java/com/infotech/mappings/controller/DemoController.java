@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.infotech.mappings.entities.Category;
+import com.infotech.mappings.entities.Customer;
 import com.infotech.mappings.entities.Offer;
 import com.infotech.mappings.entities.Product;
 import com.infotech.mappings.services.CategoryService;
+import com.infotech.mappings.services.CustomerService;
 import com.infotech.mappings.services.OfferService;
 import com.infotech.mappings.services.ProductService;
 
@@ -25,6 +27,9 @@ public class DemoController {
 	
 	@Autowired
 	private OfferService offerService;
+	
+	@Autowired
+	private CustomerService customerService;
 	
 	@GetMapping("/category-form")
 	public String displayCategoryForm(Model model) {
@@ -62,5 +67,17 @@ public class DemoController {
 	public String addProduct(Model model, @ModelAttribute Offer offer) {
 		offerService.addOffer(offer);
 		return "redirect:/offer-form";
+	}
+	
+	@GetMapping("/customer-form")
+	public String displayCustomerForm(Model model) {
+		model.addAttribute("customer", new Customer());
+		return "customer-form";
+	}
+	
+	@PostMapping("/add-customer")
+	public String addCustomer(Model model, @ModelAttribute Customer customer) {
+		customerService.addCustomer(customer);
+		return "redirect:/customer-form";
 	}
 }
