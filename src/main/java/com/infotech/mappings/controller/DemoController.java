@@ -1,5 +1,8 @@
 package com.infotech.mappings.controller;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.infotech.mappings.entities.Category;
 import com.infotech.mappings.entities.Customer;
 import com.infotech.mappings.entities.Offer;
+import com.infotech.mappings.entities.Order;
 import com.infotech.mappings.entities.Product;
 import com.infotech.mappings.services.CategoryService;
 import com.infotech.mappings.services.CustomerService;
 import com.infotech.mappings.services.OfferService;
+import com.infotech.mappings.services.OrderService;
 import com.infotech.mappings.services.ProductService;
 
 @Controller
@@ -30,6 +35,9 @@ public class DemoController {
 	
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@GetMapping("/category-form")
 	public String displayCategoryForm(Model model) {
@@ -79,5 +87,27 @@ public class DemoController {
 	public String addCustomer(Model model, @ModelAttribute Customer customer) {
 		customerService.addCustomer(customer);
 		return "redirect:/customer-form";
+	}
+	
+	@GetMapping("/order-form")
+	public String displayorderForm(Model model) {
+		model.addAttribute("order", new Order());
+		model.addAttribute("customerList", customerService.getAllCustomers());
+		model.addAttribute("productList", productService.getAllProducts());
+		return "order-form";
+	}
+	
+	@PostMapping("/add-order")
+	public String addOrder(Model model, @ModelAttribute Order order) {
+		double price = 0.0;
+		List<Product> products = order.getProducts();
+		Iterator<Product> iterator = products.iterator();
+		while(iterator.hasNext()) {
+			Product prod = iterator.next();
+			price += prod.getPrice();
+		}
+		order.setTotalPrice(price);
+		orderService.addOrder(order);
+		return "redirect:/order-form";
 	}
 }
