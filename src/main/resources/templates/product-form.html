@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Category Form</title>
+	<title>Product Form</title>
 </head>
 	
 	<form th:action="@{/add-product}" th:object="${product}" method="POST">
@@ -18,9 +18,19 @@
 			<tr>
 				<td>Select Category</td>
 				<td>
-					<select th:each="category:${categoryList}" th:field="*{category.categoryId}">
-						<option th:text="${category.name}" th:value=${category.categoryId}></option>
+					<select th:field="*{category}">
+						<th:block th:each="cat:${categoryList}">
+							<option th:text="${cat.name}" th:value="${cat.categoryId}"></option>
+						</th:block>
 					</select>
+				</td>
+			<tr>
+			<tr>
+				<td>Select Offers</td>
+				<td>
+					<th:block th:each="offer:${offerList}">
+						<input type="checkbox" th:text="${offer.description}" th:field="*{offers}" th:value="${offer.offerId}">
+					</th:block>
 				</td>
 			<tr>
 				<td></td>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Offer Form</title>
+</head>
+	
+	<form th:action="@{/add-offer}" th:object="${offer}" method="POST">
+		<table>
+			<tr>
+				<td>Offer description</td>
+				<td><input th:field="*{description}"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="submit"></td>
+			</tr>
+		</table>
+	</form>
+	
+<body>
+
+</body>
+</html>
